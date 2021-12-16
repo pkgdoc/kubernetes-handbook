@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: test
+  namespace: monitoring
+  labels:
+    app: test
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      serviceAccountName: prometheus-k8s
+      containers:
+      - image: harbor-001.jimmysong.io/library/centos:7.2.1511
+        name: test
+        imagePullPolicy: IfNotPresent
