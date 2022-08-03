@@ -1,303 +1,90 @@
-# 目录
+# Kubernetes 中文指南/云原生应用架构实战手册
 
-## 前言
+**注意：本手册中 Kubernetes 相关内容已迁移到云原生资料库中的 [《Kubernetes 基础教程》](https://lib.jimmysong.io/kubernetes-handbook)，本手册不再继续维护，更多云原生内容请访问 [云原生资料库](https://lib.jimmysong.io)。**
 
-* [序言](README.md)
+[Kubernetes](http://kubernetes.io) 是 Google 于 [2014 年 6 月](https://jimmysong.io/cloud-native/note/open-source/)基于其内部使用的 [Borg](https://research.google.com/pubs/pub43438.html) 系统开源出来的容器编排调度引擎，Google 将其作为初始和核心项目贡献给 [CNCF](https://cncf.io)（云原生计算基金会），近年来逐渐发展出了云原生生态。
 
-## 云原生
+Kubernetes 的目标不仅仅是一个编排系统，而是提供一个规范用以描述集群的架构，定义服务的最终状态，使系统自动地达到和维持该状态。Kubernetes 作为云原生应用的基石，相当于一个云原生操作系统，其重要性不言而喻。
 
-* [云原生（Cloud Native）的定义](cloud-native/cloud-native-definition.md)
-* [云原生的设计哲学](cloud-native/cloud-native-philosophy.md)
-* [Kubernetes 的诞生](cloud-native/kubernetes-history.md)
-* [Kubernetes 与云原生应用概览](cloud-native/kubernetes-and-cloud-native-app-overview.md)
-* [云原生应用之路 —— 从 Kubernetes 到云原生](cloud-native/from-kubernetes-to-cloud-native.md)
-* [定义云原生应用](cloud-native/define-cloud-native-app.md)
-  * [OAM](cloud-native/oam.md)
-    * [Workload](cloud-native/workload.md)
-    * [Component](cloud-native/component.md)
-    * [Trait](cloud-native/trait.md)
-    * [Application Scope](cloud-native/application-scope.md)
-    * [Application Configuration](cloud-native/application-configuration.md)
-  * [Crossplane](cloud-native/crossplane.md)
-* [云原生编程语言](cloud-native/cloud-native-programming-languages.md)
-  * [云原生编程语言 Ballerina](cloud-native/cloud-native-programming-language-ballerina.md)
-  * [云原生编程语言 Pulumi](cloud-native/cloud-native-programming-language-pulumi.md)
-* [云原生的未来](cloud-native/the-future-of-cloud-native.md)
+云原生技术有利于各组织在公有云、私有云和混合云等新型动态环境中，构建和运行可弹性扩展的应用。云原生的代表技术包括 **容器**、**服务网格**、**微服务**、**不可变基础设施** 和 **声明式 API**。这些技术能够构建容错性好、易于管理和便于观察的松耦合系统。结合可靠的自动化手段，云原生技术使工程师能够轻松地对系统作出频繁和可预测的重大变更。——CNCF（云原生计算基金会）。
 
-## 快速入门
+## 关于本书
 
-* [云原生新手入门指南](cloud-native/quick-start.md)
-* [Play with Kubernetes](cloud-native/play-with-kubernetes.md)
-* [快速部署一个云原生本地实验环境](cloud-native/cloud-native-local-quick-start.md)
-* [使用 Rancher 在阿里云上部署 Kubenretes 集群](cloud-native/setup-kubernetes-with-rancher-and-aliyun.md)
+<p align="left">
+  <a href="https://circleci.com/gh/rootsongjc/kubernetes-handbook/tree/master">
+    <img src="https://circleci.com/gh/rootsongjc/kubernetes-handbook/tree/master.svg?style=svg" alt="CircleCI"/>
+  </a>
+</p>
+<p align="center">
+  <a href="https://jimmysong.io/kubernetes-handbook/">
+    <img src="images/cover-thumbnail.jpg" title="Kubernetes Handbook——Kubernetes 中文指南/云原生应用架构实战手册 by Jimmy Song（宋净超）" alt="Kubernetes Handbook——Kubernetes 中文指南/云原生应用架构实战手册 by Jimmy Song (宋净超）">
+  </a>
+</p>
 
-## 概念与原理
 
-* [Kubernetes 架构](concepts/index.md)
-  * [设计理念](concepts/concepts.md)
-  * [Etcd 解析](concepts/etcd.md)
-  * [开放接口](concepts/open-interfaces.md)
-    * [CRI - Container Runtime Interface（容器运行时接口）](concepts/cri.md)
-    * [CNI - Container Network Interface（容器网络接口）](concepts/cni.md)
-    * [CSI - Container Storage Interface（容器存储接口）](concepts/csi.md)
-  * [资源对象与基本概念解析](concepts/objects.md)
-* [Pod 状态与生命周期管理](concepts/pod-state-and-lifecycle.md)
-  * [Pod 概览](concepts/pod-overview.md)
-  * [Pod 解析](concepts/pod.md)
-  * [Init 容器](concepts/init-containers.md)
-  * [Pause 容器](concepts/pause-container.md)
-  * [Pod 安全策略](concepts/pod-security-policy.md)
-  * [Pod 的生命周期](concepts/pod-lifecycle.md)
-  * [Pod Hook](concepts/pod-hook.md)
-  * [Pod Preset](concepts/pod-preset.md)
-  * [Pod 中断与 PDB（Pod 中断预算）](concepts/pod-disruption-budget.md)
-* [集群资源管理](concepts/cluster.md)
-  * [Node](concepts/node.md)
-  * [Namespace](concepts/namespace.md)
-  * [Label](concepts/label.md)
-  * [Annotation](concepts/annotation.md)
-  * [Taint 和 Toleration（污点和容忍）](concepts/taint-and-toleration.md)
-  * [垃圾收集](concepts/garbage-collection.md)
-* [控制器](concepts/controllers.md)
-  * [Deployment](concepts/deployment.md)
-  * [StatefulSet](concepts/statefulset.md)
-  * [DaemonSet](concepts/daemonset.md)
-  * [ReplicationController 和 ReplicaSet](concepts/replicaset.md)
-  * [Job](concepts/job.md)
-  * [CronJob](concepts/cronjob.md)
-  * [Horizontal Pod Autoscaling](concepts/horizontal-pod-autoscaling.md)
-    * [自定义指标 HPA](concepts/custom-metrics-hpa.md)
-  * [准入控制器（Admission Controller）](concepts/admission-controller.md)
-* [服务发现与路由](concepts/service-discovery.md)
-  * [Service](concepts/service.md)
-  * [拓扑感知路由](concepts/topology-aware-routing.md)
-  * [Ingress](concepts/ingress.md)
-    * [Traefik Ingress Controller](concepts/traefik-ingress-controller.md)
-  * [Kubernetes Service API](concepts/kubernetes-service-api.md)
-    * [Service API 简介](concepts/service-api-overview.md)
-* [身份与权限控制](concepts/authentication-and-permission.md)
-  * [ServiceAccount](concepts/serviceaccount.md)
-  * [基于角色的访问控制（RBAC）](concepts/rbac.md)
-  * [NetworkPolicy](concepts/network-policy.md)
-* [网络](concepts/networking.md)
-  * [Kubernetes 中的网络解析 —— 以 flannel 为例](concepts/flannel.md)
-  * [Kubernetes 中的网络解析 —— 以 calico 为例](concepts/calico.md)
-  * [具备 API 感知的网络和安全性管理开源软件 Cilium](concepts/cilium.md)
-    * [Cilium 架构设计与概念解析](concepts/cilium-concepts.md)
-* [存储](concepts/storage.md)
-  * [Secret](concepts/secret.md)
-  * [ConfigMap](concepts/configmap.md)
-    * [ConfigMap 的热更新](concepts/configmap-hot-update.md)
-  * [Volume](concepts/volume.md)
-  * [持久化卷（Persistent Volume）](concepts/persistent-volume.md)
-  * [Storage Class](concepts/storageclass.md)
-  * [本地持久化存储](concepts/local-persistent-storage.md)
-* [集群扩展](concepts/extension.md)
-  * [使用自定义资源扩展 API](concepts/custom-resource.md)
-  * [使用 CRD 扩展 Kubernetes API](concepts/crd.md)
-  * [Aggregated API Server](concepts/aggregated-api-server.md)
-  * [APIService](concepts/apiservice.md)
-  * [Service Catalog](concepts/service-catalog.md)
-* [多集群管理](concepts/multicluster.md)
-  * [多集群服务 API（Multi-Cluster Services API）](concepts/multi-cluster-services-api.md)
-  * [集群联邦（Cluster Federation）](practice/federation.md)
-* [资源调度](concepts/scheduling.md)
-  * [服务质量等级（QoS）](concepts/qos.md)
+Kubernetes Handbook 项目始于 2016 年底，开源于 2017 年 3 月，作为第一本系统介绍 Kubernetes 的中文电子书，其后经过不断完善。写作本书的过程中，笔者记录了从零开始学习和使用 Kubernetes 的历程，着重于经验总结和资料分享，亦有 Kubernetes 核心概念解析，希望能够帮助大家少走弯路，为大家介绍 Kubernetes 周边生态，如微服务、DevOps、大数据应用、[服务网格](https://jimmysong.io/blog/what-is-a-service-mesh/)、云原生应用、Serverless 等领域。
 
-## 用户指南
+### 开始之前
 
-* [用户指南概览](guide/index.md)
-* [资源对象配置](guide/resource-configuration.md)
-  * [配置 Pod 的 liveness 和 readiness 探针](guide/configure-liveness-readiness-probes.md)
-  * [配置 Pod 的 Service Account](guide/configure-pod-service-account.md)
-  * [Secret 配置](guide/secret-configuration.md)
-  * [管理 namespace 中的资源配额](guide/resource-quota-management.md)
-* [命令使用](guide/command-usage.md)
-  * [Docker 用户过渡到 kubectl 命令行指南](guide/docker-cli-to-kubectl.md)
-  * [kubectl 命令概览](guide/using-kubectl.md)
-  * [kubectl 命令技巧大全](guide/kubectl-cheatsheet.md)
-  * [使用 etcdctl 访问 Kubernetes 数据](guide/using-etcdctl-to-access-kubernetes-data.md)
-* [集群安全性管理](guide/cluster-security-management.md)
-  * [管理集群中的 TLS](guide/managing-tls-in-a-cluster.md)
-  * [kubelet 的认证授权](guide/kubelet-authentication-authorization.md)
-  * [TLS Bootstrap](guide/tls-bootstrapping.md)
-  * [创建用户认证授权的 kubeconfig 文件](guide/kubectl-user-authentication-authorization.md)
-  * [IP 伪装代理](guide/ip-masq-agent.md)
-  * [使用 kubeconfig 或 token 进行用户身份认证](guide/auth-with-kubeconfig-or-token.md)
-  * [Kubernetes 中的用户与身份认证授权](guide/authentication.md)
-  * [Kubernetes 集群安全性配置最佳实践](guide/kubernetes-security-best-practice.md)
-* [访问 Kubernetes 集群](guide/access-kubernetes-cluster.md)
-  * [访问集群](guide/access-cluster.md)
-  * [使用 kubeconfig 文件配置跨集群认证](guide/authenticate-across-clusters-kubeconfig.md)
-  * [通过端口转发访问集群中的应用程序](guide/connecting-to-applications-port-forward.md)
-  * [使用 service 访问群集中的应用程序](guide/service-access-application-cluster.md)
-  * [从外部访问 Kubernetes 中的 Pod](guide/accessing-kubernetes-pods-from-outside-of-the-cluster.md)
-  * [Cabin - Kubernetes 手机客户端](guide/cabin-mobile-dashboard-for-kubernetes.md)
-  * [Lens - Kubernetes IDE/桌面客户端](guide/kubernetes-desktop-client.md)
-  * [Kubernator - 更底层的 Kubernetes UI](guide/kubernator-kubernetes-ui.md)
-* [在 Kubernetes 中开发部署应用](guide/application-development-deployment-flow.md)
-  * [适用于 Kubernetes 的应用开发部署流程](guide/deploy-applications-in-kubernetes.md)
-  * [迁移传统应用到 Kubernetes 中 —— 以 Hadoop YARN 为例](guide/migrating-hadoop-yarn-to-kubernetes.md)
-  * [使用 StatefulSet 部署用状态应用](guide/using-statefulset.md)
+在阅读本书之前希望您掌握以下知识和准备以下环境：
 
-## 最佳实践
+- 阅读[云原生新手指南](cloud-native/quick-start.md)
+- Linux 操作系统原理
+- Linux 常用命令
+- Docker 容器原理及基本操作
+- 一台可以上网的电脑，Mac/Windows/Linux 皆可
+- 安装 Docker
 
-* [最佳实践概览](practice/index.md)
-* [在 CentOS 上部署 Kubernetes 集群](practice/install-kubernetes-on-centos.md)
-  * [创建 TLS 证书和秘钥](practice/create-tls-and-secret-key.md)
-  * [创建 kubeconfig 文件](practice/create-kubeconfig.md)
-  * [创建高可用 etcd 集群](practice/etcd-cluster-installation.md)
-  * [安装 kubectl 命令行工具](practice/kubectl-installation.md)
-  * [部署 master 节点](practice/master-installation.md)
-  * [安装 flannel 网络插件](practice/flannel-installation.md)
-  * [部署 node 节点](practice/node-installation.md)
-  * [安装 kubedns 插件](practice/kubedns-addon-installation.md)
-  * [安装 dashboard 插件](practice/dashboard-addon-installation.md)
-  * [安装 heapster 插件](practice/heapster-addon-installation.md)
-  * [安装 EFK 插件](practice/efk-addon-installation.md)
-* [生产级的 Kubernetes 简化管理工具 kubeadm](practice/install-kubernetes-with-kubeadm.md)
-  * [使用 kubeadm 在 Ubuntu Server 16.04 上快速构建测试集群](practice/install-kubernetes-on-ubuntu-server-16.04-with-kubeadm.md)
-* [服务发现与负载均衡](practice/service-discovery-and-loadbalancing.md)
-  * [安装 Traefik ingress](practice/traefik-ingress-installation.md)
-  * [分布式负载测试](practice/distributed-load-test.md)
-  * [网络和集群性能测试](practice/network-and-cluster-perfermance-test.md)
-  * [边缘节点配置](practice/edge-node-configuration.md)
-  * [安装 Nginx ingress](practice/nginx-ingress-installation.md)
-  * [安装配置 DNS](practice/dns-installation.md)
-    * [安装配置 Kube-dns](practice/configuring-dns.md)
-    * [安装配置 CoreDNS](practice/coredns.md)
-* [运维管理](practice/operation.md)
-  * [Master 节点高可用](practice/master-ha.md)
-  * [服务滚动升级](practice/service-rolling-update.md)
-  * [应用日志收集](practice/app-log-collection.md)
-  * [配置最佳实践](practice/configuration-best-practice.md)
-  * [集群及应用监控](practice/monitor.md)
-  * [数据持久化问题](practice/data-persistence-problem.md)
-  * [管理容器的计算资源](practice/manage-compute-resources-container.md)
-* [存储管理](practice/storage.md)
-  * [GlusterFS](practice/glusterfs.md)
-    * [使用 GlusterFS 做持久化存储](practice/using-glusterfs-for-persistent-storage.md)
-    * [使用 Heketi 作为 Kubernetes 的持久存储 GlusterFS 的 external provisioner](practice/using-heketi-gluster-for-persistent-storage.md)
-    * [在 OpenShift 中使用 GlusterFS 做持久化存储](practice/storage-for-containers-using-glusterfs-with-openshift.md)
-  * [GlusterD-2.0](practice/glusterd-2.0.md)
-  * [Ceph](practice/ceph.md)
-    * [用 Helm 托管安装 Ceph 集群并提供后端存储](practice/ceph-helm-install-guide-zh.md)
-    * [使用 Ceph 做持久化存储](practice/using-ceph-for-persistent-storage.md)
-    * [使用 rbd-provisioner 提供 rbd 持久化存储](practice/rbd-provisioner.md)
-  * [OpenEBS](practice/openebs.md)
-    * [使用 OpenEBS 做持久化存储](practice/using-openebs-for-persistent-storage.md)
-  * [Rook](practice/rook.md)
-  * [NFS](practice/nfs.md)
-    * [利用 NFS 动态提供 Kubernetes 后端存储卷](practice/using-nfs-for-persistent-storage.md)
-* [集群与应用监控](practice/monitoring.md)
-  * [Heapster](practice//heapster.md)
-    * [使用 Heapster 获取集群和对象的 metric 数据](practice/using-heapster-to-get-object-metrics.md)
-  * [Prometheus](practice/prometheus.md)
-    * [使用 Prometheus 监控 Kubernetes 集群](practice/using-prometheus-to-monitor-kuberentes-cluster.md)
-    * [Prometheus 查询语言 PromQL 使用说明](practice/promql.md)
-  * [使用 Vistio 监控 Istio 服务网格中的流量](practice/vistio-visualize-your-istio-mesh.md)
-* [分布式追踪](practice/distributed-tracing.md)
-  * [OpenTracing](practice/opentracing.md)
-* [服务编排管理](practice/services-management-tool.md)
-  * [使用 Helm 管理 Kubernetes 应用](practice/helm.md)
-  * [构建私有 Chart 仓库](practice/create-private-charts-repo.md)
-* [持续集成与发布](practice/ci-cd.md)
-  * [使用 Jenkins 进行持续集成与发布](practice/jenkins-ci-cd.md)
-  * [使用 Drone 进行持续集成与发布](practice/drone-ci-cd.md)
-* [更新与升级](practice/update-and-upgrade.md)
-  * [手动升级 Kubernetes 集群](practice/manually-upgrade.md)
-  * [升级 dashboard](practice/dashboard-upgrade.md)
-* [扩展控制器](practice/controller-extended.md)
-  * [OpenKruise](practice/openkruise.md)
-    * [原地升级](practice/in-place-update.md)
-* [安全策略](practice/security-policy.md)
-  * [开放策略代理（OPA）](practice/open-policy-agent.md)
-  * [云原生安全](practice/cloud-native-security.md)
+### 本书主题
 
-## 服务网格
+本书的主题不局限于 Kubernetes，还包括以下几大主题：
 
-* [服务网格（Service Mesh）](usecases/service-mesh.md)
-* [企业级服务网格架构](usecases/the-enterprise-path-to-service-mesh-architectures.md)
-  * [服务网格基础](usecases/service-mesh-fundamental.md)
-  * [服务网格技术对比](usecases/comparing-service-mesh-technologies.md)
-  * [服务网格对比 API 网关](usecases/service-mesh-vs-api-gateway.md)
-  * [采纳和演进](usecases/service-mesh-adoption-and-evolution.md)
-  * [定制和集成](usecases/service-mesh-customization-and-integration.md)
-  * [总结](usecases/service-mesh-conclusion.md)
-* [Istio](usecases/istio.md)
-    * [使用 Istio 前需要考虑的问题](usecases/before-using-istio.md)
-    * [Istio 中 sidecar 的注入规范及示例](usecases/sidecar-spec-in-istio.md)
-    * [如何参与 Istio 社区及注意事项](usecases/istio-community-tips.md)
-    * [Istio 免费学习资源汇总](usecases/istio-tutorials-collection.md)
-    * [Sidecar 的注入与流量劫持](usecases/understand-sidecar-injection-and-traffic-hijack-in-istio-service-mesh.md)
-    * [Envoy Sidecar 代理的路由转发](usecases/envoy-sidecar-routing-of-istio-service-mesh-deep-dive.md)
-    * [Istio 如何支持虚拟机](usecases/how-to-integrate-istio-with-vm.md)
-    * [Istio 支持虚拟机的历史](usecases/istio-vm-support.md)
-* [Envoy](usecases/envoy.md)
-    * [Envoy 的架构与基本术语](usecases/envoy-terminology.md)
-    * [Envoy 作为前端代理](usecases/envoy-front-proxy.md)
-    * [Envoy mesh 教程](usecases/envoy-mesh-in-kubernetes-tutorial.md)
+- 云原生开源组件
+- 云原生应用与微服务架构
+- 基于 Kubernetes 的服务网格（Service Mesh）架构
 
-## 领域应用
+本书中的说明、安装的所有组件、所用示例和操作要求至少 **Kubernetes 1.6+** 版本。
 
-* [领域应用概览](usecases/index.md)
-* [微服务架构](usecases/microservices.md)
-  * [微服务中的服务发现](usecases/service-discovery-in-microservices.md)
-  * [使用 Java 构建微服务并发布到 Kubernetes 平台](usecases/microservices-for-java-developers.md)
-    * [Spring Boot 快速开始指南](usecases/spring-boot-quick-start-guide.md)
-* [大数据](usecases/big-data.md)
-  * [Spark 与 Kubernetes](usecases/spark-on-kubernetes.md)
-    * [Spark standalone on Kubernetes](usecases/spark-standalone-on-kubernetes.md)
-    * [运行支持 Kubernetes 原生调度的 Spark 程序](usecases/running-spark-with-kubernetes-native-scheduler.md)
-* [Serverless 架构](usecases/serverless.md)
-  * [理解 Serverless](usecases/understanding-serverless.md)
-  * [FaaS（函数即服务）](usecases/faas.md)
-    * [OpenFaaS 快速入门指南](usecases/openfaas-quick-start.md)
-  * [Knative](usecases/knative.md)
-* [边缘计算](usecases/edge-computing.md)
-* [人工智能](usecases/ai.md)
-* [可观察性](usecases/observability.md)
+### 使用方式
 
-## 开发指南
+您可以通过以下方式使用本书：
 
-* [开发指南概览](develop/index.md)
-* [SIG 和工作组](develop/sigs-and-working-group.md)
-* [开发环境搭建](develop/developing-environment.md)
-  * [本地分布式开发环境搭建（使用 Vagrant 和 Virtualbox）](develop/using-vagrant-and-virtualbox-for-development.md)
-* [单元测试和集成测试](develop/testing.md)
-* [client-go 示例](develop/client-go-sample.md)
-  * [client-go 中的 informer 源码分析](develop/client-go-informer-sourcecode-analyse.md)
-* [Operator](develop/operator.md)
-  * [operator-sdk](develop/operator-sdk.md)
-* [kubebuilder](develop/kubebuilder.md)
-  * [使用 kubebuilder 创建 operator 示例](develop/kubebuilder-example.md)
-* [高级开发指南](develop/advance-developer.md)
-* [社区贡献](develop/contribute.md)
-* [Minikube](develop/minikube.md)
+- [GitHub](https://github.com/rootsongjc/kubernetes-handbook)
+- [在线浏览](https://jimmysong.io/kubernetes-handbook/)
+- [下载本书的发行版](https://github.com/rootsongjc/kubernetes-handbook/releases)
+- 按照[说明](https://github.com/rootsongjc/kubernetes-handbook/blob/master/CODE_OF_CONDUCT.md)自行编译成离线版本
+- Fork 一份添加你自己的笔记自行维护，有余力者可以一起参与进来
 
-## 社区及生态
+## 快速开始
 
-* [云原生计算基金会（CNCF）](cloud-native/cncf.md)
-  * [CNCF 章程](cloud-native/cncf-charter.md)
-  * [CNCF 特别兴趣小组（SIG）说明](cloud-native/cncf-sig.md)
-  * [开源项目加入 CNCF Sandbox 的要求](cloud-native/cncf-sandbox-criteria.md)
-  * [CNCF 中的项目治理](cloud-native/cncf-project-governing.md)
-  * [CNCF Ambassador](cloud-native/cncf-ambassador.md)
-* [认证及培训](cloud-native/certification.md)
-  * [认证 Kubernetes 服务提供商（KCSP）说明](appendix/about-kcsp.md)
-  * [认证 Kubernetes 管理员（CKA）说明](appendix/about-cka-candidate.md)
+如果您想要学习 Kubernetes 和云原生应用架构但是又不想自己从头开始搭建和配置一个集群，推荐以下几种方式：
 
-## 附录
+- [使用虚拟机安装的拥有三个节点的 Kubernetes 集群](https://github.com/rootsongjc/kubernetes-vagrant-centos-cluster)：项目直接在本地部署一个 3 节点的分布式集群及其他如 Heapster、EFK、Istio 等可选组件
+- [Cloud Native Sandbox](https://github.com/rootsongjc/cloud-native-sandbox)：更加轻量级，在个人电脑上使用 Docker 运行单节点的 Kubernetes、Istio 等组件
+- [Katacoda 提供的 Kubernetes 环境](https://katacoda.com/kubernetes)：免费的在线学习平台，无需注册，拥有 GitHub 账号即可登录
 
-* [附录说明](appendix/index.md)
-* [Kubernetes 中的应用故障排查](appendix/debug-kubernetes-services.md)
-* [Kubernetes 相关资讯和情报链接](appendix/material-share.md)
-* [Docker 最佳实践](appendix/docker-best-practice.md)
-* [Kubernetes 使用技巧](appendix/tricks.md)
-* [Kubernetes 相关问题记录](appendix/issues.md)
-* [Kubernetes 及云原生年度总结及展望](appendix/summary-and-outlook.md)
-  * [Kubernetes 与云原生 2017 年年终总结及 2018 年展望](appendix/kubernetes-and-cloud-native-summary-in-2017-and-outlook-for-2018.md)
-  * [Kubernetes 与云原生 2018 年年终总结及 2019 年展望](appendix/kubernetes-and-cloud-native-summary-in-2018-and-outlook-for-2019.md)
-* [CNCF 年度报告解读](appendix/cncf-annual-report.md)
-  * [CNCF 2018 年年度报告解读](appendix/cncf-annual-report-2018.md)
-  * [CNCF 2020 年年度报告解读](appendix/cncf-annual-report-2020.md)
+## 贡献与致谢
+
+本项目已集成 CircleCI，在每次提交后会自动扫描书中链接及 MarkDown 样式，并编译为 Gitbook 通过 GitHub Pages 发布。因本书写作时间跨度大，其中难免有过时和遗漏的地方，感谢大家的贡献和指正！
+
+- [查看贡献者列表](https://github.com/rootsongjc/kubernetes-handbook/graphs/contributors)
+- [查看如何贡献](https://github.com/rootsongjc/kubernetes-handbook/blob/master/CONTRIBUTING.md)
+- [查看文档的组织结构与使用方法](https://github.com/rootsongjc/kubernetes-handbook/blob/master/CODE_OF_CONDUCT.md)
+
+关于本书有任何问题，欢迎[提交 Issue](https://github.com/rootsongjc/kubernetes-handbook/issues/new) 或[与作者联系](https://jimmysong.io/contact/)。
+
+## 许可证
+
+您可以使用[署名 - 非商业性使用 - 相同方式共享 4.0 (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)  协议共享。
+
+## 云原生社区
+
+<p align="center">
+  <a href="https://mp.weixin.qq.com/s/ppDxLapuFwo3isEpg3zfUQ">
+    <img src="./images/wechat.jpg" alt="加入云原生社区" title="加入云原生社区">
+  </a>
+</p>
+
+云原生社区是中国最大的独立第三方云原生终端用户和泛开发者社区，由 CNCF 大使、开源意见领袖共同发起成立于 2020 年 5 月 12 日，提供云原生专业资讯，促进云原生产业发展。
+
+官方网站 <https://cloudnative.to>，关注云原生社区微信公众号，[申请加入社区](https://mp.weixin.qq.com/s/ppDxLapuFwo3isEpg3zfUQ)。
